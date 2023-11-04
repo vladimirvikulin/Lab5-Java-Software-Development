@@ -17,7 +17,7 @@ public class TextProcessor {
 
             Text text = new Text(inputText);
             List<Sentence> sentences = text.getSentences();
-            sentences.sort((s1, s2) -> s1.getWords().size() - s2.getWords().size());
+            sentences.sort((s1, s2) -> s1.countWords() - s2.countWords());
 
             System.out.println("\nSentences in order of increasing number of words:");
             for (Sentence sentence : sentences) {

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sentence {
-    private List<Word> words;
+    private List<Object> sentenceElements;
     private String sentenceText;
 
     /**
@@ -13,20 +13,26 @@ public class Sentence {
      */
     public Sentence(String sentenceText) {
         this.sentenceText = sentenceText;
-        words = new ArrayList<>();
-        String[] wordTokens = sentenceText.split("[\\s-]+");
-        for (String wordToken : wordTokens) {
-            words.add(new Word(wordToken));
+        sentenceElements = new ArrayList<>();
+        String[] elements = sentenceText.split("(?<=\\s)|(?=\\s)|(?<=[-:;.,!?])|(?=[-:;.,!?])");
+        for (String element : elements) {
+            if (element.matches("\\s")) {
+                continue;
+            } else if (element.matches("[-:;.,!?]")) {
+                sentenceElements.add(new Punctuation(element.charAt(0)));
+            } else {
+                sentenceElements.add(new Word(element));
+            }
         }
     }
-
+    
     /**
      * Gets the words in the sentence.
      *
-     * @return The list of words in the sentence.
+     * @return The list of elements in the sentence.
      */
-    public List<Word> getWords() {
-        return words;
+    public List<Object> getSentenceElements() {
+        return sentenceElements;
     }
 
     /**
@@ -36,5 +42,20 @@ public class Sentence {
      */
     public String getSentenceText() {
         return sentenceText;
+    }
+
+    /**
+     * Counts the number of words in the sentence without considering punctuation.
+     *
+     * @return The number of words in the sentence.
+     */
+    public int countWords() {
+        int wordCount = 0;
+        for (Object element : sentenceElements) {
+            if (element instanceof Word) {
+                wordCount++;
+            }
+        }
+        return wordCount;
     }
 }

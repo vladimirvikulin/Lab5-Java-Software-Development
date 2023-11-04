@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Word {
-    private List<Object> elements;
+    private List<Letter> letters;
 
     /**
      * Constructs a Word object from the given word string.
@@ -11,22 +11,19 @@ public class Word {
      * @param word The word as a string.
      */
     public Word(String word) {
-        elements = new ArrayList<>();
+        letters = new ArrayList<>();
         for (char c : word.toCharArray()) {
-            if (Character.isLetter(c)) {
-                elements.add(new Letter(c));
-            } else {
-                elements.add(new Punctuation(c));
-            }
+            letters.add(new Letter(c));
         }
     }
 
     /**
-     * Gets the elements (letters and punctuation) in the word.
+     * Gets the letters in the word.
      *
-     * @return The list of elements in the word.
+     * @return The list of letters in the word.
      */
-    public List<Object> getElements() {
-        return elements;
+    public List<Letter> getLetters() {
+        return letters;
     }
 }
+
